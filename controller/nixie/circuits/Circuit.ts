@@ -144,7 +144,7 @@ export class NixieCircuit extends NixieEquipment {
                     tOn = typeof timeout === 'undefined' ? 1000 : timeout;  // change delay after on
                     tOff = typeof timeout === 'undefined' ? 1000 : timeout; // change delay after off      
                     let thm = sys.board.valueMaps.lightThemes.findItem(cstate.lightingTheme);  // get the previous theme
-                    count = count - thm.sequence;   // compare sequences and advance                    
+                    count = count - thm.sequence + 1;   // compare sequences and advance                    
                     if (count < 0) count = count + 17;  // if the new theme is earlier in the sequence we must loop all the way through
                 }
                 else if (cstate.isOn) arr.push({ isOn: false, timeout: 1000 });
