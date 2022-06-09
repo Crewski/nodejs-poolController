@@ -161,7 +161,7 @@ export class NixieCircuit extends NixieEquipment {
                 console.log(arr);
             }
             else arr = count;
-            // if (cstate.type == 20 && !cstate.isOn) arr.unshift({ isOn: true, timeout: 16000});    // colorlogic: we need to wait for the safety light to clear
+            if (cstate.data.type.val == 14 && !cstate.isOn) arr.unshift({ isOn: true, timeout: 16000});    // colorlogic: we need to wait for the safety light to clear
             // The documentation for IntelliBrite is incorrect.  The sequence below will give us Party mode.
             // Party mode:2
             // Start: Off
