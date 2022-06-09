@@ -141,7 +141,10 @@ export class NixieCircuit extends NixieEquipment {
                 let t = typeof timeout === 'undefined' ? 100 : timeout;              
                 if (cstate.type == 20){   // check to see if light is colorlogic (20)      
                     let thm = sys.board.valueMaps.lightThemes.findItem(cstate.lightingTheme);  // get the previous theme
-                    count = count - thm.sequence + 1;   // compare sequences and advance                    
+                    console.log("Count = ", count);
+                    console.log(thm);
+                    count = count - thm.sequence + 1;   // compare sequences and advance      
+                    console.log("We are going: ", count);              
                     if (count < 0) count = count + 17;  // if the new theme is earlier in the sequence we must loop all the way through
                 }
                 else if (cstate.isOn) arr.push({ isOn: false, timeout: 1000 });
