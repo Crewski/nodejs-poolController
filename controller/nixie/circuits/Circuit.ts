@@ -137,20 +137,16 @@ export class NixieCircuit extends NixieEquipment {
             this._sequencing = true;
             let arr = [];
             let cstate = state.circuits.getItemById(this.circuit.id);
-            console.log(cstate);
-            console.log(cstate.lightingTheme);            
-            let thm = sys.board.valueMaps.lightThemes.findItem(cstate.lightingTheme);  // get the previous theme
-            // console.log("Count = ", count);
-            console.log(thm);
             if (typeof count === 'number') {
                 let t = typeof timeout === 'undefined' ? 100 : timeout;              
                 if (cstate.data.type.val  == 14){   // check to see if light is colorlogic (20)      
                     let thm = sys.board.valueMaps.lightThemes.findItem(cstate.lightingTheme);  // get the previous theme
                     console.log("Count = ", count);
                     console.log(thm);
-                    count = count - thm.sequence + 1;   // compare sequences and advance      
-                    console.log("We are going: ", count);              
-                    if (count < 0) count = count + 17;  // if the new theme is earlier in the sequence we must loop all the way through
+                    count = count - thm.sequence + 1;   // compare sequences and advance                
+                    if (count < 1) count = count + 17;  // if the new theme is earlier in the sequence we must loop all the way through
+                       
+                    console.log("We are going: ", count);     
                 }
                 else if (cstate.isOn) arr.push({ isOn: false, timeout: 1000 });
                 //arr.push({ isOn: false, timeout: t }); // This may not be needed but we always need to start from off.
