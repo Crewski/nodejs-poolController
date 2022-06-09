@@ -138,11 +138,8 @@ export class NixieCircuit extends NixieEquipment {
             let arr = [];
             let cstate = state.circuits.getItemById(this.circuit.id);
             if (typeof count === 'number') {
-                let tOn = typeof timeout === 'undefined' ? 100 : timeout;
-                let tOff = typeof timeout === 'undefined' ? 100 : timeout;                
-                if (cstate.type == 20){   // check to see if light is colorlogic (20) 
-                    tOn = typeof timeout === 'undefined' ? 1000 : timeout;  // change delay after on
-                    tOff = typeof timeout === 'undefined' ? 1000 : timeout; // change delay after off      
+                let t = typeof timeout === 'undefined' ? 100 : timeout;              
+                if (cstate.type == 20){   // check to see if light is colorlogic (20)      
                     let thm = sys.board.valueMaps.lightThemes.findItem(cstate.lightingTheme);  // get the previous theme
                     count = count - thm.sequence + 1;   // compare sequences and advance                    
                     if (count < 0) count = count + 17;  // if the new theme is earlier in the sequence we must loop all the way through
@@ -152,15 +149,15 @@ export class NixieCircuit extends NixieEquipment {
                 //[{ isOn: true, timeout: 1000 }, { isOn: false, timeout: 1000 }]
                 for (let i = 0; i < count; i++) {
                     if (i < count - 1) {
-                        arr.push({ isOn: true, timeout: tOn });
-                        arr.push({ isOn: false, timeout: tOff });
+                        arr.push({ isOn: true, timeout: t });
+                        arr.push({ isOn: false, timeout: t });
                     }
                     else arr.push({ isOn: true, timeout: 1000 });
                 }
                 console.log(arr);
             }
             else arr = count;
-            if (cstate.type == 20 && !cstate.isOn) arr.unshift({ isOn: true, timeout: 16000});    // colorlogic: we need to wait for the safety light to clear
+            // if (cstate.type == 20 && !cstate.isOn) arr.unshift({ isOn: true, timeout: 16000});    // colorlogic: we need to wait for the safety light to clear
             // The documentation for IntelliBrite is incorrect.  The sequence below will give us Party mode.
             // Party mode:2
             // Start: Off
